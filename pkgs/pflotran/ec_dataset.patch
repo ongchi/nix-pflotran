@@ -1,0 +1,12 @@
+diff --git a/regression_tests/geophys/ert/ec_dataset.py b/regression_tests/geophys/ert/ec_dataset.py
+index fa329d8..4d3e51b 100644
+--- a/regression_tests/geophys/ert/ec_dataset.py
++++ b/regression_tests/geophys/ert/ec_dataset.py
+@@ -21,7 +21,7 @@ for k in range(nz):
+             ec[i+j*nx+k*nxXny] = 1.+count*0.01
+ f = File(new_dataset_filename,mode='w')
+ f.create_dataset('electrical_conductivity',data=ec)
+-iarray = np.arange(1,n+1,dtype=np.int)
++iarray = np.arange(1,n+1,dtype=int)
+ f.create_dataset('Cell Ids',data=iarray)
+ f.close()
