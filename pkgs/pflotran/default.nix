@@ -2,12 +2,12 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "pflotran";
-  version = "7.0";
+  version = "7.0-unstable-2026-03-14";
 
   src = pkgs.fetchgit {
     url = "https://bitbucket.org/pflotran/pflotran.git";
-    rev = "6bb47d8f229edd25dc74f036584b3ab0c0a42694";
-    sha256 = "sha256-oHptZutxj9VUFXX9V8NohGKaWoe0RlHCr8AfecKGRwM=";
+    rev = "564b6875eac1ab9da3217bc801bb9972ab5dfee0";
+    sha256 = "sha256-uE5TVF4J1cZmItKd4ZAbAuvO2F8i1sDaKTSk6RB0Fo8=";
   };
 
   prePatch =

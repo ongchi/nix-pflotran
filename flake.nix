@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -14,13 +14,22 @@
 
         stdenv = pkgs.stdenv;
 
+        parmetis = pkgs.parmetis.overrideAttrs (old: {
+          postPatch = (old.postPatch or "") + ''
+            substituteInPlace Makefile \
+              --replace 'CONFIG_FLAGS = -DCMAKE_VERBOSE_MAKEFILE=1' \
+              'CONFIG_FLAGS = -DCMAKE_VERBOSE_MAKEFILE=1 -DCMAKE_POLICY_VERSION_MINIMUM=3.5'
+          '';
+        });
+
         petsc = (pkgs.petsc.override {
           withFullDeps = true;
-        }).overrideAttrs (old: rec {
-          version = "3.24.0";
+          inherit parmetis;
+        }).overrideAttrs (_old: {
+          version = "3.24.3";
           src = pkgs.fetchzip {
-            url = "https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-3.24.0.tar.gz";
-            hash = "sha256-5jqYTo5sfwLNByOlpry0zpI+q3u7ErwJJ97h7w5bvNQ=";
+            url = "https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-3.24.3.tar.gz";
+            hash = "sha256-acrNcCTcjC4iLZD0lYvRhidnRTWsXs57XIQmZWKYIMg=";
           };
         });
 
