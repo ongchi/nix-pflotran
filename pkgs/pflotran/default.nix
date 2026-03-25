@@ -1,4 +1,4 @@
-{ stdenv, pkgs, system, petsc }:
+{ stdenv, pkgs, system, petsc, withParmetis ? false }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "pflotran";
@@ -51,6 +51,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   # TODO: Test log printing should probably be done better
   passthru = {
+    inherit withParmetis;
     # h5py = petsc.python3.pkgs.h5py.override { inherit (petsc) hdf5; };
     tests = {
       main =

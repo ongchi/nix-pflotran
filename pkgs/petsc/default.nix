@@ -1,4 +1,4 @@
-{ stdenv, pkgs, system, gfortran, mpi, hdf5, python3 }:
+{ stdenv, pkgs, system, gfortran, mpi, hdf5, python3, withParmetis ? false }:
 
 stdenv.mkDerivation (finalAttrs:
 let
@@ -72,7 +72,9 @@ rec {
     "--with-hdf5-dir=${hdf5_dev}"
     "--download-f2cblaslapack=${external_srcs.f2cblaslapack}"
     "--download-metis=${external_srcs.metis}"
+  ] ++ pkgs.lib.optionals withParmetis [
     "--download-parmetis=${external_srcs.parmetis}"
+  ] ++ [
     "--download-hypre=${external_srcs.hypre}"
     "--download-viennacl=${external_srcs.viennacl}"
     "CXXFLAGS=-Wall -Wwrite-strings -Wno-strict-aliasing -Wno-unknown-pragmas -fstack-protector -fno-stack-check -Wno-deprecated -fvisibility=hidden"
@@ -97,7 +99,7 @@ rec {
   passthru = {
     hdf5 = hdf5_dev;
     mpi = mpi_dev;
-    inherit system gfortran python3 external_srcs;
+    inherit system gfortran python3 external_srcs withParmetis;
   };
 }
 )
